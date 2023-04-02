@@ -21,6 +21,10 @@ export class UserService {
     return this.filter(user);
   }
 
+  async getOne(userId: string): Promise<User> {
+    return await User.findOneBy({ userId });
+  }
+
   async delete(userId: string): Promise<void> {
     await User.delete(userId);
   }
