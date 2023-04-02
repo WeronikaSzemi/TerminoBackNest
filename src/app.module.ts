@@ -6,6 +6,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
 import { User } from './user/user.entity';
 import { AuthModule } from './auth/auth.module';
+import { TermbaseModule } from './termbase/termbase.module';
+import { Termbase } from './termbase/entities/termbase.entity';
 
 @Module({
   imports: [
@@ -16,18 +18,18 @@ import { AuthModule } from './auth/auth.module';
       username: 'root',
       password: '',
       database: 'termino',
-      entities: [User],
+      entities: [User, Termbase],
       bigNumberStrings: false,
       logging: true,
       synchronize: true,
     }),
     UserModule,
     AuthModule,
+    TermbaseModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {
-  constructor(private dataSource: DataSource) {
-  }
+  constructor(private dataSource: DataSource) {}
 }
