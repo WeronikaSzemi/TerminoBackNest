@@ -32,21 +32,7 @@ export class TermbaseService {
     termbase.termbaseName = req.termbaseName;
     termbase.user = user;
 
-    try {
-      const sql = `CREATE TABLE \`${user.userId}_${termbase.termbaseName}\` (\`entryId\` VARCHAR(36) NOT NULL DEFAULT uuid(), \`term\` VARCHAR(50) NOT NULL, \`termSource\` VARCHAR(100) NULL, \`termDefinition\` VARCHAR(300) NULL, \`termDefinitionSource\` VARCHAR(100) NULL, \`termCollocations\` VARCHAR(300) NULL, \`equivalent\` VARCHAR(50) NOT NULL, \`equivalentSource\` VARCHAR(100) NULL, \`equivalentDefinition\` VARCHAR(300) NULL, \`equivalentDefinitionSource\` VARCHAR(100) NULL, \`equivalentCollocations\` VARCHAR(300) NULL, PRIMARY KEY (\`entryId\`)) COLLATE=utf8mb4_unicode_ci;`;
-
-      await this.entityManager.query(sql);
-
-      try {
-        await termbase.save();
-
-      } catch (e) {
-        throw new Error(e.message);
-      }
-
-    } catch (e) {
-      throw new Error(e.message);
-    }
+    await termbase.save();
 
     return this.filter(termbase);
   }
@@ -68,7 +54,6 @@ export class TermbaseService {
     return await Termbase.findOneBy({
       termbaseId,
     });
-    // @TODO: pobranie haseł
   }
 
   async remove(termbaseId: string, user: User): Promise<void> {
@@ -85,16 +70,6 @@ export class TermbaseService {
       throw new Error('Nie znaleziono takiego słownika.');
     }
 
-    try {
-      const sql = `DROP TABLE \`${user.userId}_${termbase.termbaseName}\``;
-      await this.entityManager.query(sql);
-      try {
-        await termbase.remove();
-      } catch (e) {
-        throw new Error(e.message);
-      }
-    } catch (e) {
-      throw new Error(e.message);
-    }
+    await termbase.remove();
   }
 }
