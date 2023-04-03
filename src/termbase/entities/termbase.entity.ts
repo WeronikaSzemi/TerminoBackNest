@@ -2,11 +2,12 @@ import {
   BaseEntity,
   Column,
   Entity,
-  ManyToOne,
-  PrimaryGeneratedColumn,
-} from 'typeorm';
+  ManyToOne, OneToMany,
+  PrimaryGeneratedColumn
+} from "typeorm";
 import { User } from '../../user/entities/user.entity';
 import { TermbaseInterface } from '../../interfaces/termbase';
+import { Entry } from "../../entry/entities/entry.entity";
 
 @Entity()
 export class Termbase extends BaseEntity implements TermbaseInterface {
@@ -22,4 +23,7 @@ export class Termbase extends BaseEntity implements TermbaseInterface {
     onDelete: 'CASCADE',
   })
   user: User;
+
+  @OneToMany(type => Entry, entry => entry.termbase)
+  entries: Entry[];
 }

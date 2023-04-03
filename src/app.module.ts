@@ -8,6 +8,8 @@ import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { TermbaseModule } from './termbase/termbase.module';
 import { Termbase } from './termbase/entities/termbase.entity';
+import { EntryModule } from './entry/entry.module';
+import { Entry } from "./entry/entities/entry.entity";
 
 @Module({
   imports: [
@@ -18,7 +20,7 @@ import { Termbase } from './termbase/entities/termbase.entity';
       username: 'root',
       password: '',
       database: 'termino',
-      entities: [User, Termbase],
+      entities: [User, Termbase, Entry],
       bigNumberStrings: false,
       logging: true,
       synchronize: true,
@@ -26,6 +28,7 @@ import { Termbase } from './termbase/entities/termbase.entity';
     UserModule,
     AuthModule,
     TermbaseModule,
+    EntryModule,
   ],
   controllers: [AppController],
   providers: [AppService],
