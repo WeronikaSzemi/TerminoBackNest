@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { AuthLoginDto } from './dto/auth-login.dto';
 import { Response } from 'express';
-import { User } from '../user/user.entity';
+import { User } from '../user/entities/user.entity';
 import { compare } from 'bcrypt';
 import { JwtPayload } from './jwt.strategy';
 import { sign } from 'jsonwebtoken';
@@ -65,5 +65,23 @@ export class AuthService {
     await user.save();
 
     return token;
+  }
+
+  async logout(user: User, res: Response) {
+    try {
+      user.currentTokenId = null;
+
+      await user.save();
+
+      res.clearCookie('jwt', {
+        secure: false,
+        domain: 'localhost',
+        httpOnly: true,
+      });
+
+      return res.json({ ok: true });
+    } catch (e) {
+      return res.json({ error: e.message });
+    }
   }
 }
