@@ -5,8 +5,8 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { UserInterface } from '../interfaces/user';
-import { Termbase } from '../termbase/entities/termbase.entity';
+import { UserInterface } from '../../interfaces/user';
+import { Termbase } from '../../termbase/entities/termbase.entity';
 
 @Entity()
 export class User extends BaseEntity implements UserInterface {
@@ -29,6 +29,6 @@ export class User extends BaseEntity implements UserInterface {
   })
   currentTokenId: string | null;
 
-  @OneToMany((type) => Termbase, (entity) => entity.user)
+  @OneToMany((type) => Termbase, (termbase) => termbase.user)
   termbases: Termbase[];
 }
