@@ -4,7 +4,7 @@ import { AppService } from './app.service';
 import { UserModule } from './user/user.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSource } from 'typeorm';
-import { User } from './user/user.entity';
+import { User } from './user/entities/user.entity';
 import { AuthModule } from './auth/auth.module';
 import { TermbaseModule } from './termbase/termbase.module';
 import { Termbase } from './termbase/entities/termbase.entity';
