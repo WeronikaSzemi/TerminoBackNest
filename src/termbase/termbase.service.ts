@@ -2,12 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { TermbaseDto } from './dto/termbase.dto';
 import { User } from '../user/entities/user.entity';
 import { Termbase } from './entities/termbase.entity';
-import { EntityManager } from 'typeorm';
-import { InjectEntityManager } from '@nestjs/typeorm';
 
 @Injectable()
 export class TermbaseService {
-  constructor(@InjectEntityManager() private entityManager: EntityManager) {}
 
   filter(termbase: Termbase) {
     const { termbaseId, termbaseName, user } = termbase;
