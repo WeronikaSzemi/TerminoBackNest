@@ -1,7 +1,7 @@
 import { BaseEntity } from 'typeorm';
-import { IsNotEmpty, IsString, Length, MaxLength } from "class-validator";
+import { IsNotEmpty, IsString, Length, MaxLength } from 'class-validator';
 
-export class CreateEntryDto extends BaseEntity {
+export class EntryDto extends BaseEntity {
 
   @IsString()
   @IsNotEmpty()
@@ -44,8 +44,4 @@ export class CreateEntryDto extends BaseEntity {
   @IsString()
   @MaxLength(300)
   equivalentCollocations?: string;
-  //
-  // @IsString()
-  // @IsNotEmpty()
-  // termbase: string;
 }

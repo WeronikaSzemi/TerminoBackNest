@@ -1,7 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards } from "@nestjs/common";
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from "@nestjs/common";
 import { EntryService } from './entry.service';
-import { CreateEntryDto } from './dto/create-entry.dto';
-import { UpdateEntryDto } from './dto/update-entry.dto';
+import { EntryDto } from './dto/entry.dto';
 import { AuthGuard } from '@nestjs/passport';
 
 @Controller(':termbaseId/entry')
@@ -12,7 +11,7 @@ export class EntryController {
   @UseGuards(AuthGuard('jwt'))
   create(
     @Param('termbaseId') termbaseId: string,
-    @Body() req: CreateEntryDto,
+    @Body() req: EntryDto,
   ) {
     return this.entryService.create(req, termbaseId);
   }
@@ -21,8 +20,9 @@ export class EntryController {
   @UseGuards(AuthGuard('jwt'))
   findAll(
     @Param('termbaseId') termbaseId: string,
+    @Query('sort') sort: string,
   ) {
-    return this.entryService.findAll(termbaseId);
+    return this.entryService.findAll(termbaseId, sort);
   }
 
   @Get('/:id')
@@ -35,13 +35,18 @@ export class EntryController {
 
   @Patch('/:id')
   @UseGuards(AuthGuard('jwt'))
-  update(@Param('id') id: string, @Body() updateEntryDto: UpdateEntryDto) {
-    return this.entryService.update(+id, updateEntryDto);
+  update(
+    @Param('id') id: string,
+    @Body() req: EntryDto,
+    ) {
+    return this.entryService.update(id, req);
   }
 
   @Delete('/:id')
   @UseGuards(AuthGuard('jwt'))
-  remove(@Param('id') id: string) {
-    return this.entryService.remove(+id);
+  remove(
+    @Param('id') id: string
+  ) {
+    return this.entryService.remove(id);
   }
 }
