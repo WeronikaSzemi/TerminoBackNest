@@ -21,8 +21,12 @@ export class UserService {
     return this.filter(user);
   }
 
-  async getOne(userId: string): Promise<User> {
-    return await User.findOneBy({ userId });
+  async findOne(email: string): Promise<boolean> {
+    const user = await User.findOneBy(
+      { email },
+    );
+
+    return !!user;
   }
 
   async delete(userId: string): Promise<void> {
