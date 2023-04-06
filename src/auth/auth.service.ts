@@ -18,7 +18,7 @@ export class AuthService {
       const match = await compare(req.pwd, user.hash);
 
       if (!match) {
-        return res.json('Nieprawidłowe dane logowania.');
+        return res.json(false);
       }
       const token = await this.createToken(await this.generateToken(user));
 
@@ -28,7 +28,10 @@ export class AuthService {
           domain: 'localhost',
           httpOnly: true,
         })
-        .json({ ok: true });
+        .json({
+          result: true,
+          user: user,
+        });
     } catch (e) {
       return res.json({ error: e.message });
     }
@@ -79,9 +82,35 @@ export class AuthService {
         httpOnly: true,
       });
 
-      return res.json({ ok: true });
+      return res.json(true);
     } catch (e) {
       return res.json({ error: e.message });
     }
+  }
+
+  async checkIfLoggedIn(id: string, res: Response) {
+    const found = await User.findOneBy({
+      userId: id,
+    });
+
+    if (!found) {
+      return res.json({
+        result: false,
+        message: 'Nie znaleziono takiego_ej użytkownika_czki.',
+      });
+    }
+
+    if (found.currentTokenId === null) {
+      return res.json({
+        result: false,
+        message: 'Użytkownik_czka niezalogowany_a.'
+      })
+    } else {
+      return res.json({
+        result: true,
+        userId: found.userId,
+      })
+    }
+
   }
 }

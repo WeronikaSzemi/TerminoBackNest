@@ -16,6 +16,19 @@ export class UserService {
     user.email = newUser.email;
     user.hash = hashSync(newUser.pwd, 10);
 
+    const match = await User.findOne({
+      where: {
+        email: newUser.email,
+      },
+    })
+
+
+    if (match) {
+      throw new Error(
+        `Istnieje już konto dla adresu ${newUser.email}. Zaloguj się lub podaj inny adres.`,
+      );
+    }
+
     await user.save();
 
     return this.filter(user);
