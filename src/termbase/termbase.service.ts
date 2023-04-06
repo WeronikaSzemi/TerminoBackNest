@@ -12,33 +12,37 @@ export class TermbaseService {
     return { termbaseId, termbaseName, userId };
   }
 
-  async create(req: TermbaseDto, user: User) {
+  async create(req: TermbaseDto, userId: string) {
 
-    const found = await Termbase.findOneBy({
+    const foundTermbase = await Termbase.findOneBy({
       user: {
-        userId: user.userId,
+        userId,
       },
       termbaseName: req.termbaseName,
     });
 
-    if (found) {
+    if (foundTermbase) {
       return 'Słownik o tej nazwie już istnieje.';
     }
 
+    const foundUser: User = await User.findOneBy({
+      userId,
+    });
+
     const termbase = new Termbase();
     termbase.termbaseName = req.termbaseName;
-    termbase.user = user;
+    termbase.user = foundUser;
 
     await termbase.save();
 
     return this.filter(termbase);
   }
 
-  async findAll(user: User): Promise<Termbase[]> {
+  async findAll(userId: string): Promise<Termbase[]> {
     return await Termbase.find({
       where: {
         user: {
-          userId: user.userId,
+          userId,
         },
       },
       order: {

@@ -13,29 +13,30 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserObj } from '../decorators/user-obj.decorator';
 import { User } from '../user/entities/user.entity';
 
-@Controller('/termbase')
+@Controller(':userId/termbase')
 export class TermbaseController {
   constructor(private readonly termbaseService: TermbaseService) {}
 
   @Post('/')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   create(
+    @Param('userId') userId: string,
     @Body() req: TermbaseDto,
-    @UserObj() user: User
   ) {
-    return this.termbaseService.create(req, user);
+    return this.termbaseService.create(req, userId);
   }
 
   @Get('/')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   findAll(
-    @UserObj() user: User,
+    // @UserObj() user: User,
+    @Param('userId') userId: string,
   ) {
-    return this.termbaseService.findAll(user);
+    return this.termbaseService.findAll(userId);
   }
 
   @Get('/:termbaseId')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   findOne(
     @Param('termbaseId') termbaseId: string,
   ) {
@@ -43,7 +44,7 @@ export class TermbaseController {
   }
 
   @Delete('/:termbaseId')
-  @UseGuards(AuthGuard('jwt'))
+  // @UseGuards(AuthGuard('jwt'))
   remove(
     @Param('termbaseId'
   ) termbaseId: string,
