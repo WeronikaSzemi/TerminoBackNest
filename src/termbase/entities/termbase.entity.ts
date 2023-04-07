@@ -20,7 +20,7 @@ export class Termbase extends BaseEntity implements TermbaseInterface {
   termbaseName: string;
 
   @ManyToOne((type) => User, (user) => user.termbases, {
-    onDelete: 'CASCADE',
+    onDelete: 'CASCADE', nullable: false,
   })
   user: User;
 
