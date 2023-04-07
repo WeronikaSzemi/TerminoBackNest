@@ -18,7 +18,7 @@ export class TermbaseController {
   constructor(private readonly termbaseService: TermbaseService) {}
 
   @Post('/')
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   create(
     @Param('userId') userId: string,
     @Body() req: TermbaseDto,
@@ -27,7 +27,7 @@ export class TermbaseController {
   }
 
   @Get('/')
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   findAll(
     // @UserObj() user: User,
     @Param('userId') userId: string,
@@ -36,7 +36,7 @@ export class TermbaseController {
   }
 
   @Get('/:termbaseId')
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   findOne(
     @Param('termbaseId') termbaseId: string,
   ) {
@@ -44,7 +44,7 @@ export class TermbaseController {
   }
 
   @Delete('/:termbaseId')
-  // @UseGuards(AuthGuard('jwt'))
+  @UseGuards(AuthGuard('jwt'))
   remove(
     @Param('termbaseId'
   ) termbaseId: string,

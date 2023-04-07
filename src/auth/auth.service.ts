@@ -30,7 +30,7 @@ export class AuthService {
         })
         .json({
           result: true,
-          user: user,
+          userId: user.userId,
         });
     } catch (e) {
       return res.json({ error: e.message });

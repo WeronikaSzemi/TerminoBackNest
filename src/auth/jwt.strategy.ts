@@ -8,7 +8,7 @@ export interface JwtPayload {
 }
 
 function cookieExtractor(req: any): null | string {
-  return req && req.cookies ? req.cookies?.jwt ?? null : null;
+  return req && req.cookies ? (req.cookies?.jwt ?? null) : null;
 }
 
 @Injectable()
@@ -22,13 +22,16 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: JwtPayload, done: (error, user) => void) {
+    console.log('method working');
     if (!payload || !payload.id) {
+      console.log('1', payload);
       return done(new UnauthorizedException(), false);
     }
 
     const user = await User.findOneBy({
       currentTokenId: payload.id,
     });
+    console.log('2', user);
 
     if (!user) {
       return done(new UnauthorizedException(), false);

@@ -77,12 +77,16 @@ export class EntryService {
   async update(id: string, req: EntryDto): Promise<Entry> {
 
     if (!id) {
-      throw new Error('Brakuje ID hasła');
+      throw new Error('Brakuje ID hasła.');
     }
 
     const entry = await Entry.findOneBy({
       id,
     });
+
+    if (!entry) {
+      throw new Error('Nie odnaleziono hasła.');
+    }
 
     entry.term = req.term;
     entry.termSource = req.termSource;
@@ -95,7 +99,6 @@ export class EntryService {
     entry.equivalentDefinitionSource = req.equivalentDefinitionSource;
     entry.equivalentCollocations = req.equivalentCollocations;
     entry.modifiedAt = new Date();
-
     await entry.save();
     return entry;
   }
