@@ -27,7 +27,9 @@ export class AuthService {
           secure: false,
           domain: 'localhost',
           httpOnly: true,
+          maxAge: 60 * 60 * 24 * 1000,
         })
+        .status(200)
         .json({
           result: true,
           userId: user.userId,
@@ -111,6 +113,5 @@ export class AuthService {
         userId: found.userId,
       })
     }
-
   }
 }
