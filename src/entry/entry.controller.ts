@@ -25,6 +25,7 @@ export class EntryController {
     return this.entryService.findAll(termbaseId, sort);
   }
 
+
   @Get('/:id')
   @UseGuards(AuthGuard('jwt'))
   findOne(

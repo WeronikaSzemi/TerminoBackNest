@@ -20,9 +20,8 @@ export class UserService {
       where: {
         email: newUser.email,
       },
-    })
-
-
+    });
+    
     if (match) {
       throw new Error(
         `Istnieje już konto dla adresu ${newUser.email}. Zaloguj się lub podaj inny adres.`,
@@ -34,12 +33,17 @@ export class UserService {
     return this.filter(user);
   }
 
-  async findOne(email: string): Promise<boolean> {
+  async findOne(
+    data: string,
+    by: string,
+  ): Promise<RegisteredUserRes | boolean> {
     const user = await User.findOneBy(
-      { email },
+      { [by]: data },
     );
 
-    return !!user;
+    if (!user) {
+      return false;
+    } else return this.filter(user);
   }
 
   async delete(userId: string): Promise<void> {

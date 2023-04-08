@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, Inject, Param, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Inject, Param, Post, Query } from "@nestjs/common";
 import { UserService } from './user.service';
 import { RegisterDto } from './dto/register.dto';
 import { RegisteredUserRes } from '../interfaces/user';
@@ -14,11 +14,12 @@ export class UserController {
     return this.userService.register(newUser);
   }
 
-  @Get('/:email')
+  @Get('/:data')
   findOne(
-    @Param('email') email: string,
+    @Param('data') data: string,
+    @Query('by') by: string,
   ) {
-    return this.userService.findOne(email);
+    return this.userService.findOne(data, by);
   }
 
   @Delete('/:userId')
