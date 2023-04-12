@@ -42,6 +42,7 @@ I am planning to further develop and improve the app.
 
 The elements that need improving are mainly:
 * authorization on the front-end side: going back to homepage should not make it necessary to sign in again; after signing out, the user should not be able to enter the dashboard
+* handling exceptions
 * signing up view: the fields should not turn red as soon as the view is loaded; another field for confirming the password should be added
 
 As for developing the app, I specifically intend to:
