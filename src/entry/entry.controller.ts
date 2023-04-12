@@ -3,7 +3,7 @@ import { EntryService } from './entry.service';
 import { EntryDto } from './dto/entry.dto';
 import { AuthGuard } from '@nestjs/passport';
 
-@Controller(':termbaseId/entry')
+@Controller('/api/:termbaseId/entry')
 export class EntryController {
   constructor(private readonly entryService: EntryService) {}
 

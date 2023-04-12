@@ -13,7 +13,7 @@ import { AuthGuard } from '@nestjs/passport';
 import { UserObj } from '../decorators/user-obj.decorator';
 import { User } from '../user/entities/user.entity';
 
-@Controller('/termbase')
+@Controller('/api/termbase')
 export class TermbaseController {
   constructor(private readonly termbaseService: TermbaseService) {}
 
